@@ -16,7 +16,7 @@
   -->
 <resources>
     <style name="DialtactsTheme"
-           parent="android:Theme.Holo.Light">
+           parent="android:Theme.Holo">
         <item name="android:textColorPrimary">@color/dialtacts_primary_text_color</item>
         <item name="android:textColorSecondary">@color/dialtacts_secondary_text_color</item>
         <item name="android:windowActionBarOverlay">false</item>
@@ -54,7 +54,7 @@
         <item name="contact_browser_background">@android:color/transparent</item>
         <item name="list_item_text_indent">@dimen/contact_browser_list_item_text_indent</item>
         <!-- CallLog -->
-        <item name="call_log_primary_text_color">#000000</item>
+        <item name="call_log_primary_text_color">@color/dialtacts_primary_text_color</item>
         <item name="call_log_primary_background_color">#000000</item>
         <item name="call_log_secondary_text_color">@color/dialtacts_secondary_text_color</item>
         <item name="call_log_secondary_background_color">#333333</item>
@@ -76,15 +76,15 @@
         <item name="android:windowActionBarOverlay">true</item>
     </style>
 
-    <style name="CallDetailActivityTheme" parent="android:Theme.Holo.Light">
+    <style name="CallDetailActivityTheme" parent="android:Theme.Holo">
         <item name="android:windowBackground">@color/background_dialer_list_items</item>
         <item name="android:gravity">top</item>
         <item name="android:listViewStyle">@style/ListViewStyle</item>
         <!-- CallLog -->
-        <item name="call_log_primary_text_color">#333333</item>
-        <item name="call_log_primary_background_color">#FFFFFF</item>
-        <item name="call_log_secondary_text_color">#333333</item>
-        <item name="call_log_secondary_background_color">#FFFFFF</item>
+        <item name="call_log_primary_text_color">@color/dialtacts_primary_text_color</item>
+        <item name="call_log_primary_background_color">#000000</item>
+        <item name="call_log_secondary_text_color">@color/dialtacts_secondary_text_color</item>
+        <item name="call_log_secondary_background_color">#000000</item>
         <item name="call_log_header_color">#FFFFFF</item>
         <!-- VoicemailStatus -->
         <item name="call_log_voicemail_status_height">48dip</item>
@@ -133,7 +133,7 @@
         <item name="android:background">@drawable/action_bar_tab</item>
     </style>
 
-    <style name="ListViewStyle" parent="@android:style/Widget.Holo.Light.ListView">
+    <style name="ListViewStyle" parent="@android:style/Widget.Holo.ListView">
         <item name="android:overScrollMode">always</item>
     </style>
 
