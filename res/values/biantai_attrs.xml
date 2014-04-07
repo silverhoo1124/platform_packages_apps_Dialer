@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+                         $$$$$$$$$$$$$$$
+                      $$$$$$        $$  $$$$
+                     $$$             $     $$$
+                   $$$$$$$          $$$      $$$
+                  $$$$ $$$$        $$          $$$
+                 $$$      $$       $            $$$
+     FFFF       $$$$     $$                $$$    $$
+    UUUUUU     $$$  $$$$$$              $$$$$$$$$  $$
+               $$$                     $$     $$$  $$
+               $$    $$$$$$$$$         $$      $$  $$
+                $$ $$  $$$ $$$$$$$$$     $$$$$$    $$
+                 $ $$      $$$  $$  $$$           $$
+  $$$             $$$              $$  $$        $$$
+   $$$$             $$$$$$$            $$      $$$
+ $$$$$$$$$$$         $$$  $$$$$       $$     $$$$
+    $$$  $$$$$$$$$   $$$     $$$$$   $$  $$$$$
+  $$$$        $$$$$$$$$$$$$$$    $$$$$$$$$$$$
+ $$$$               $$$     $$$$$$$$$$$
+      $$           $$$            $$$
+        $$        $$$            $$$
+        $$$$$$$$$$$$$$$$$$       $$$
+     $$$$$$$$     $$$$$$$$$$$$$  $$
+        $$$$      $$$            $$
+       $$$        $$            $$$
+                  $$            $$$
+                  $$$$$$$$$$$$$$$$$
+                   $$$$$$$$$$$$$$$
+                     $$$       $$$
+                    $$$         $$$
+                   $$$           $$$
+                  $$$             $$$
+                 $$$               $$$
+                $$$                 $$$
+               $$$                   $$$
+            $$$$$                    $$$$
+           $$$$$$                    $$$
+                                   $$$$
+-->
+<resources>
+
+    <!-- Call stats -->
+    <!-- 通话数据 -->
+    <declare-styleable name="LinearColorBar">
+        <attr name="redColor" format="color" />
+        <attr name="greenColor" format="color" />
+        <attr name="blueColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PieChartView">
+        <attr name="outlineColor" format="color" />
+    </declare-styleable>
+
+</resources>

@@ -31,4 +31,10 @@
         <attr name="call_log_voicemail_status_action_text_color" format="color" />
     </declare-styleable>
 
+    <declare-styleable name="AnchoredScrollView">
+        <attr name="anchorView" format="reference" />
+        <attr name="anchorAtBottom" format="boolean" />
+        <attr name="anchoredView" format="reference" />
+    </declare-styleable>
+
 </resources>
