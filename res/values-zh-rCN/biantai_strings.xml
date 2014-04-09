@@ -72,7 +72,7 @@
 
     <string name="call_stats_date_filter">调整时间范围</string>
     <string name="call_stats_reset_filter">重置时间范围</string>
-    <string name="call_stats_sort_by_duration">通话时间分类</string>
-    <string name="call_stats_sort_by_count">通话数量分类</string>
+    <string name="call_stats_sort_by_duration">按通话时间排序</string>
+    <string name="call_stats_sort_by_count">按通话数量排序</string>
 
 </resources>
