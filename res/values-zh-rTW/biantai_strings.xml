@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+                         $$$$$$$$$$$$$$$
+                      $$$$$$        $$  $$$$
+                     $$$             $     $$$
+                   $$$$$$$          $$$      $$$
+                  $$$$ $$$$        $$          $$$
+                 $$$      $$       $            $$$
+     FFFF       $$$$     $$                $$$    $$
+    UUUUUU     $$$  $$$$$$              $$$$$$$$$  $$
+               $$$                     $$     $$$  $$
+               $$    $$$$$$$$$         $$      $$  $$
+                $$ $$  $$$ $$$$$$$$$     $$$$$$    $$
+                 $ $$      $$$  $$  $$$           $$
+  $$$             $$$              $$  $$        $$$
+   $$$$             $$$$$$$            $$      $$$
+ $$$$$$$$$$$         $$$  $$$$$       $$     $$$$
+    $$$  $$$$$$$$$   $$$     $$$$$   $$  $$$$$
+  $$$$        $$$$$$$$$$$$$$$    $$$$$$$$$$$$
+ $$$$               $$$     $$$$$$$$$$$
+      $$           $$$            $$$
+        $$        $$$            $$$
+        $$$$$$$$$$$$$$$$$$       $$$
+     $$$$$$$$     $$$$$$$$$$$$$  $$
+        $$$$      $$$            $$
+       $$$        $$            $$$
+                  $$            $$$
+                  $$$$$$$$$$$$$$$$$
+                   $$$$$$$$$$$$$$$
+                     $$$       $$$
+                    $$$         $$$
+                   $$$           $$$
+                  $$$             $$$
+                 $$$               $$$
+                $$$                 $$$
+               $$$                   $$$
+            $$$$$                    $$$$
+           $$$$$$                    $$$
+                                   $$$$
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+
+    <!-- Call stats -->
+    <!-- 通话数据 -->
+    <string name="call_log_stats_title">數據</string>
+    <string name="callStatsDetailTitle">通訊數據詳情</string>
+
+    <string name="call_stats">通訊數據</string>
+    <string name="call_stats_refresh">刷新</string>
+    <string name="activity_title_call_stats">通訊數據</string>
+
+    <string name="call_stats_nav_all">所有通訊</string>
+    <string name="call_stats_nav_incoming">來電</string>
+    <string name="call_stats_nav_outgoing">去電</string>
+    <string name="call_stats_nav_missed">未接聽</string>
+    <string name="call_stats_incoming">來電: <xliff:g id="percent">%d</xliff:g>%%</string>
+    <string name="call_stats_outgoing">去電: <xliff:g id="percent">%d</xliff:g>%%</string>
+    <string name="call_stats_missed">未接</string>
+    <string name="call_stats_missed_percent">未接: <xliff:g id="percent">%d</xliff:g>%%</string>
+    <string name="call_stats_header_total">全部: <xliff:g id="call_count">%s</xliff:g>, <xliff:g id="duration">%s</xliff:g></string>
+    <string name="call_stats_header_total_callsonly">全部: <xliff:g id="call_count">%s</xliff:g></string>
+    <string name="call_stats_filter_from">起始日期</string>
+    <string name="call_stats_filter_to">截止日期</string>
+    <string name="call_stats_filter_picker_title">過濾範圍</string>
+
+    <string name="date_quick_selection">快速選擇</string>
+    <string name="date_qs_currentmonth">本月</string>
+    <string name="date_qs_currentquarter">本季度</string>
+    <string name="date_qs_currentyear">本年度</string>
+    <string name="date_qs_lastweek">上星期</string>
+    <string name="date_qs_lastmonth">上個月</string>
+    <string name="date_qs_lastquarter">上季度</string>
+    <string name="date_qs_lastyear">上年度</string>
+
+    <string name="call_stats_date_filter">調節時間範圍</string>
+    <string name="call_stats_reset_filter">重置時間範圍</string>
+    <string name="call_stats_sort_by_duration">以通訊時間排序</string>
+    <string name="call_stats_sort_by_count">以通訊數量排序</string>
+
+</resources>
