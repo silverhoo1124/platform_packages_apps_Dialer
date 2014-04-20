@@ -27,6 +27,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
     android-support-v13 \
     android-support-v4 \
     android-ex-variablespeed \
+    pinyin \
 
 LOCAL_REQUIRED_MODULES := libvariablespeed
 
@@ -40,3 +41,10 @@ include $(BUILD_PACKAGE)
 
 # Use the following include to make our test apk.
 include $(call all-makefiles-under,$(LOCAL_PATH))
+
+# Include pinyin lib
+include $(CLEAR_VARS)
+
+LOCAL_PREBUILT_STATIC_JAVA_LIBRARIES := pinyin:libs/pinyin4android.jar
+
+include $(BUILD_MULTI_PREBUILT)
