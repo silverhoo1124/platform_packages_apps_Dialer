@@ -296,6 +296,16 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".dialpad.SpeedDialPreferenceActivity"
+            android:label="@string/speeddial_title"
+            android:theme="@style/SpeedDialActivityTheme" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- BroadcastReceiver for receiving Intents from Notification mechanism. -->
         <receiver android:name="com.android.incallui.InCallApp$NotificationBroadcastReceiver"
                   android:exported="false"

@@ -24,11 +24,14 @@ import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.net.Uri;
@@ -36,6 +39,8 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.SystemProperties;
+import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.provider.Contacts.People;
 import android.provider.Contacts.Phones;
@@ -67,6 +72,7 @@ import android.view.ViewTreeObserver;
 import android.view.ViewTreeObserver.OnPreDrawListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -87,6 +93,7 @@ import com.android.dialer.R;
 import com.android.dialer.SpecialCharSequenceMgr;
 import com.android.dialer.database.DialerDatabaseHelper;
 import com.android.dialer.interactions.PhoneNumberInteraction;
+import com.android.dialer.dialpad.SpeedDialPreferenceActivity;
 import com.android.dialer.util.OrientationUtil;
 import com.android.internal.telephony.ITelephony;
 import com.android.phone.common.CallLogAsync;
@@ -94,6 +101,7 @@ import com.android.phone.common.HapticFeedback;
 import com.google.common.annotations.VisibleForTesting;
 
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Fragment that displays a twelve-key phone dialpad.
@@ -197,7 +205,7 @@ public class DialpadFragment extends Fragment
      * isn't enclosed by the container.
      */
     private View mDigitsContainer;
-    private EditText mDigits;
+    private static EditText mDigits;
 
     /** Remembers if we need to clear digits field when the screen is completely gone. */
     private boolean mClearDigitsOnStop;
@@ -217,6 +225,13 @@ public class DialpadFragment extends Fragment
     private View mDialButton;
     private ListView mDialpadChooser;
     private DialpadChooserAdapter mDialpadChooserAdapter;
+
+    // Speed dial 快速拨号
+    private SharedPreferences speedDialPrefs;
+    private static final String SPEED_DIAL = "speed_dial";
+    private static final String PREF_DONT_REMIND_ME_KEY = "pref_dont_remind_me_key";
+    private static final int PICK_CONTACT = 1;
+    private String speed_dial_num;
 
     /**
      * Regular expression prohibiting manual phone call. Can be empty, which means "no rule".
@@ -671,6 +686,12 @@ public class DialpadFragment extends Fragment
         // Long-pressing zero button will enter '+' instead.
         fragmentView.findViewById(R.id.zero).setOnLongClickListener(this);
 
+        // Speed dial 快速拨号
+        int[] speedButtonIds = new int[] { R.id.two, R.id.three, R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine};
+        for (int id : speedButtonIds) {
+            fragmentView.findViewById(id).setOnLongClickListener(this);
+        }
+
     }
 
     @Override
@@ -804,6 +825,7 @@ public class DialpadFragment extends Fragment
 
     private void setupMenuItems(Menu menu) {
         final MenuItem addToContactMenuItem = menu.findItem(R.id.menu_add_contacts);
+        final MenuItem SpeedDialMenuItem = menu.findItem(R.id.menu_speeddial);
 
         // We show "add to contacts" menu only when the user is
         // seeing usual dialpad and has typed at least one digit.
@@ -1049,6 +1071,70 @@ public class DialpadFragment extends Fragment
 
                 return true;
             }
+            case R.id.two: {
+                if (TextUtils.equals(mDigits.getText(), "2")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("2");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.three: {
+                if (TextUtils.equals(mDigits.getText(), "3")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("3");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.four: {
+                if (TextUtils.equals(mDigits.getText(), "4")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("4");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.five: {
+                if (TextUtils.equals(mDigits.getText(), "5")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("5");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.six: {
+                if (TextUtils.equals(mDigits.getText(), "6")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("6");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.seven: {
+                if (TextUtils.equals(mDigits.getText(), "7")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("7");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.eight: {
+                if (TextUtils.equals(mDigits.getText(), "8")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("8");
+                    return true;
+                }
+                return false;
+            }
+            case R.id.nine: {
+                if (TextUtils.equals(mDigits.getText(), "9")) {
+                	removePreviousDigitIfPossible();
+                	callSpeedDial("9");
+                    return true;
+                }
+                return false;
+            }
             case R.id.digits: {
                 // Right now EditText does not show the "paste" option when cursor is not visible.
                 // To show that, make the cursor visible, and return false, letting the EditText
@@ -1068,6 +1154,83 @@ public class DialpadFragment extends Fragment
             }
         }
         return false;
+    }
+
+    // Speed dial 快速拨号
+    private void callSpeedDial(final String num) {
+        final Context mContext= getActivity();
+        speedDialPrefs = mContext.getSharedPreferences(SPEED_DIAL, Context.MODE_PRIVATE);
+        String value = speedDialPrefs.getString(SpeedDialPreferenceActivity.SPEED_DIAL + num, null);
+        if (value == null) {
+            boolean remindMe = speedDialPrefs.getBoolean(PREF_DONT_REMIND_ME_KEY, false);
+            if (!remindMe) {
+                LinearLayout viewLayout = new LinearLayout(mContext);
+                viewLayout.setOrientation(LinearLayout.VERTICAL);
+                TextView alertTextView = new TextView(mContext);
+                alertTextView.setText(getString(R.string.alert_add_speeddial_title, num));
+                alertTextView.setPadding(15, 15, 0, 0);
+                alertTextView.setTextColor(Color.parseColor("#FFFFFF"));
+                alertTextView.setTextSize(18);
+                viewLayout.addView(alertTextView);
+                final CheckBox cbCheckBox = new CheckBox(mContext);
+                cbCheckBox.setText(R.string.dont_remind_me_title);
+                viewLayout.addView(cbCheckBox);
+                new AlertDialog.Builder(mContext).setTitle(R.string.speeddial_dialog_title)
+                        .setView(viewLayout)
+                        .setPositiveButton(android.R.string.ok, new OnClickListener() {
+                            @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (cbCheckBox.isChecked()) {
+                                    speedDialPrefs.edit().putBoolean(PREF_DONT_REMIND_ME_KEY, true).apply();
+                                    }
+                                    speed_dial_num = num;
+                                    Intent intent = new Intent(Intent.ACTION_PICK,
+                                            ContactsContract.Contacts.CONTENT_URI);
+                                    intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                                    startActivityForResult(intent, PICK_CONTACT);
+                                }
+                        }).setNegativeButton(android.R.string.cancel, null).create()
+                        .show();
+            } else {
+                speed_dial_num = num;
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        ContactsContract.Contacts.CONTENT_URI);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(intent, PICK_CONTACT);
+            }
+        } else {
+            String valueArray[] = value.split("\n");
+            String number = valueArray[1].replaceAll(" ","");
+            Intent intent = CallUtil.getCallIntent(number, (getActivity() instanceof DialtactsActivity ?
+                    ((DialtactsActivity) getActivity()).getCallOrigin() : null));
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+        case (PICK_CONTACT):
+            if (resultCode == Activity.RESULT_OK) {
+                Uri contactData = data.getData();
+                Cursor c = getActivity().getContentResolver().query(contactData, null, null, null, null);
+                if(c != null && c.moveToFirst()) {
+                    String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    String number = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    int typeID = c.getInt(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                    String customLabel = c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL));
+                    CharSequence type = ContactsContract.CommonDataKinds.Phone.getTypeLabel(getActivity().getResources(), typeID, customLabel);
+                    c.close();
+                    Intent intent = new Intent(getActivity(), SpeedDialPreferenceActivity.class);
+                    intent.putExtra("name", name);
+                    intent.putExtra("number", number);
+                    intent.putExtra("type", type);
+                    intent.putExtra("id", speed_dial_num);
+                    startActivity(intent);
+                }
+            }
+        }
     }
 
     /**
@@ -1550,6 +1713,10 @@ public class DialpadFragment extends Fragment
             case R.id.menu_add_wait:
                 updateDialString(WAIT);
                 return true;
+            case R.id.menu_speeddial:
+                Intent intent = new Intent(getActivity(), SpeedDialPreferenceActivity.class);
+                startActivity(intent);
+            	return true;
             default:
                 return false;
         }
